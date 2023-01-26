@@ -1,0 +1,98 @@
+﻿<%@ Master Language="VB" CodeFile="basica.master.vb" Inherits="_Basica" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen" />
+    <link href="/css/3-blue.css" rel="stylesheet" type="text/css" />
+    <script src="../../script/js/jquery-1.8.2.js"></script>
+    <script src="../../script/js/jquery-ui.js"></script>
+    <title></title>
+
+    <script type="text/javascript">
+            // OJO async:false //
+            function validarloginusuario(source, args) {
+                $.ajax({
+                    type: "POST",
+                    url: "register.aspx/EstaLibre",
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"login":"' + args.Value + '"}',
+                    dataType: "json",
+                    success: function (response) {
+                        args.IsValid = response.d;
+                    }
+                });
+        }
+    </script>
+
+</head>
+
+<body>
+<form id="formBasica" runat="server" >
+     <asp:ScriptManager ID="sm" runat="server" />
+
+     <div class="outer">
+
+       <div id="page_nav">
+           <div style="float:right;margin-top:10px">
+                <asp:Menu ID="menuNav" runat="server" IncludeStyleBlock="false"  >
+                    <Items>
+                        <asp:MenuItem Text="Iniciar sesión" NavigateUrl="login.aspx" />
+                        <asp:MenuItem Text="Registrarse" NavigateUrl="~/contenidos/anonimo/register.aspx" />
+                    </Items>
+                </asp:Menu>
+           </div>
+       </div> <!-- page nav #end -->
+
+       <div id="header" class="clearfix">
+                <div class="logo"> 
+                     <asp:ImageButton ID="logo" runat="server" ImageUrl="/imagenes/logo/logo.PNG" AlternateText="Foro Kpanda" width="150px"  PostBackUrl="" />
+                 </div>      
+        </div> <!-- header #end -->
+  
+        <div id="main_nav"> 
+            <div class="searchform">
+                <asp:TextBox ID="txBuscar" runat="server" Width="90%" Height="90%" CssClass="s" placeholder='Buscar...'/>
+                <asp:ImageButton ID="btBuscar" runat="server" CssClass="search_btn" ImageUrl="imagenes/botones/search_icon.png" AlternateText="botón enviar" />
+            </div>
+         </div>
+          
+         <div id="wrapper" class="clearfix">        	
+              <div id="content" class="content_inner" runat="server"> 
+                     <asp:ContentPlaceHolder id="contenido" runat="server">
+                     </asp:ContentPlaceHolder> 
+              </div>
+                  
+		      <div id="sidebar">
+                    <asp:ContentPlaceHolder id="barra" runat="server">
+                    </asp:ContentPlaceHolder>
+             </div> <!-- sidebar right-->           
+          
+         </div> <!-- wrapper #end -->
+
+         <div id="bottom" class="clearfix">
+                   <asp:ContentPlaceHolder id="endContenido" runat="server">
+                   </asp:ContentPlaceHolder>
+         </div>  
+
+
+        <div id="footer" class="clearfix">
+            <p><b>
+                <asp:Label ID="lCopy1" runat="server" CssClass="copyleft" Text="&copy;" />
+                <asp:Label ID="lCopy2" runat="server" Text=" 2º DAW - 2021. No se reserva ningún derecho." />
+                <span class="fr">
+                    <asp:Label ID="lDiseno" runat="server" Text="Diseñado por "  />
+                    <asp:HyperLink ID="hlDGQ" runat="server" Text=" Sheila Peralta Díaz" NavigateUrl=""  />
+                </span>
+            </b></p>	
+        </div> <!-- footer #end -->
+
+  </div>
+
+</form>
+</body>
+</html>
